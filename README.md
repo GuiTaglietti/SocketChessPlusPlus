@@ -1,6 +1,6 @@
 # C++ Chess Game with Socket Communication
 
-Welcome to the C++ Chess Game with Socket Communication repository! This project is an advanced implementation of the classic game of chess in C++, featuring socket communication for multiplayer gameplay between two computers. Whether you're a chess enthusiast looking for a challenging opponent or a C++ developer interested in exploring advanced programming concepts, this project offers an exciting playground for learning and enjoyment.
+Welcome! This project is an advanced implementation of the classic game of chess in C++, featuring socket communication for multiplayer gameplay between two computers. Whether you're a chess enthusiast looking for a challenging opponent or a C++ developer interested in exploring advanced programming concepts, this project offers an exciting playground for learning and enjoyment.
 
 ## Features
 
