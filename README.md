@@ -12,13 +12,7 @@ Welcome! This project is an advanced implementation of the classic game of chess
 
 ## Getting Started
 
-To get started with the C++ Chess Game, follow these steps:
-
-1. **Clone the Repository**: Clone this repository to your local machine using `git clone`.
-
-2. **Build the Game**: Build the game using your preferred C++ compiler. Ensure that you have the necessary dependencies installed.
-
-3. **Run the Game**: Execute the compiled binary to start the game. You can choose between single-player mode against the AI or multiplayer mode using socket communication.
+More information soon...
 
 ## License
 
