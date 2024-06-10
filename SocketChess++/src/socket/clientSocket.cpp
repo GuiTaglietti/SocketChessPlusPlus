@@ -25,56 +25,46 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "serverSocket.h"
+#include "../include/socket/clientSocket.h"
 
 namespace socketchess {
 
-namespace serversocket {
+namespace clientsocket {
 
-ServerSocket::ServerSocket(int port) noexcept : addrlen(sizeof(address)) {
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+ClientSocket::ClientSocket(const std::string &ip, int port) noexcept {
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         std::cerr << "Erro na criação do socket" << std::endl;
         return;
     }
 
-    int opt = 1;
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
-        std::cerr << "setsockopt" << std::endl;
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port);
+
+    if (inet_pton(AF_INET, ip.c_str(), &serv_addr.sin_addr) <= 0) {
+        std::cerr << "Endereço inválido/ Endereço não suportado" << std::endl;
         return;
     }
 
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(port);
-
-    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
-        std::cerr << "Erro no bind" << std::endl;
+    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        std::cerr << "Falha na conexão" << std::endl;
         return;
     }
 }
 
-ServerSocket::~ServerSocket() noexcept {
-    close(server_fd);
+ClientSocket::~ClientSocket() noexcept {
+    close(sock);
 }
 
-ConcreteServerSocket::ConcreteServerSocket(int port) noexcept
-    : ServerSocket(port) {}
+ConcreteClientSocket::ConcreteClientSocket(const std::string &ip, int port) noexcept
+    : ClientSocket(ip, port) {}
 
-bool ConcreteServerSocket::startListening(int backlog) const noexcept {
-    return listen(server_fd, backlog) == 0;
+bool ConcreteClientSocket::sendMessage(const std::string &message) const noexcept {
+    return send(sock, message.c_str(), message.size(), 0) != -1;
 }
 
-int ConcreteServerSocket::acceptConnection() const noexcept {
-    return accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
-}
-
-bool ConcreteServerSocket::sendMessage(int clientSocket, const std::string &message) const noexcept {
-    return send(clientSocket, message.c_str(), message.size(), 0) != -1;
-}
-
-bool ConcreteServerSocket::receiveMessage(int clientSocket, std::string &message) const noexcept {
+bool ConcreteClientSocket::receiveMessage(std::string &message) const noexcept {
     char buffer[1024] = {0};
-    int valread = read(clientSocket, buffer, 1024);
+    int valread = read(sock, buffer, 1024);
     if (valread > 0) {
         message = std::string(buffer, valread);
         return true;
@@ -82,6 +72,6 @@ bool ConcreteServerSocket::receiveMessage(int clientSocket, std::string &message
     return false;
 }
 
-} // namespace serversocket
+} // namespace clientsocket
 
 } // namespace socketchess

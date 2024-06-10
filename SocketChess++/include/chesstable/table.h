@@ -22,44 +22,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef CHESSPIECE_H
-#define CHESSPIECE_H
+#ifndef TABLE_H
+#define TABLE_H
 
-#include <set>
+#include <memory>
 
 #include "piececolor.h"
-#include "piecename.h"
+#include "chesspiece.h"
 
 namespace socketchess{
 
-namespace chesspieces{
-
-class chesspiece{
+class chesstable{
 public:
-    explicit chesspiece(const piececolor &_c, const piecename &_pn) noexcept : c(_c), pname(_pn){}
-    virtual ~chesspiece() noexcept = default;
-    chesspiece(const chesspiece&) = delete;
-    chesspiece& operator=(const chesspiece&) = delete;
-
-    // Inline getters
-    [[nodiscard]] piecename get_name() const noexcept { return pname; }
-    [[nodiscard]] piececolor get_color() const noexcept { return c; }
-
-    // Inline setters
-    void set_name(const piecename _pn) noexcept { pname = _pn; }
-    void set_color(const piececolor _c) noexcept { c = _c; }
-
-    // Member functions
-    [[nodiscard]] virtual const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept = 0;
-    [[nodiscard]] virtual const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, char x1, char y1) const noexcept =0;
-
+    explicit chesstable() noexcept;
+    [[nodiscard]] chesspieces::chesspiece* get_piece(const int &x, const int &y) const noexcept { return board[x][y].get(); }
 private:
-    piecename pname; // Enum used to define piece name ( KING | QUEEN | ROOK |BISHOP | KNIGHT | PAWN )
-    piececolor c; // Enum used to define piece color (BLACK | WHITE)
+    std::unique_ptr<chesspieces::chesspiece> board[8][8];
 };
 
-} // namespace chesspieces
+} // END OF NAMESPACE socketchess
 
-} // namespace socketchess
 
 #endif

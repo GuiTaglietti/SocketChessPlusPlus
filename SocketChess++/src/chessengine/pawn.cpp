@@ -22,31 +22,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef PAWN_H
-#define PAWN_H
 
-#include <set>
+#include "../include/chessengine/pawn.h"
+#include "../include/chessengine/piececolor.h"
+#include "../include/chesstable/table.h"
 
-#include "chesspiece.h"
+namespace socketchess {
 
-namespace socketchess{
-
-namespace chesspieces{
-
-class pawn : public chesspiece{
-public:
-    explicit pawn(const piececolor &_c) : chesspiece(_c, piecename::PAWN), is_first_movement(true){}
-
-    // Overriding "chesspiece" class virtual member function
-    [[nodiscard]] const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept override;
-    [[nodiscard]] const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, char x1, char y1) const noexcept override;
-private:
-    bool is_first_movement;
-};
+[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::pawn::verify_allowed_movements(chesspiece* piece, char x1, char y1) const noexcept {
+    std::set<std::pair<char,char>> allowed_movements;
+    short int posI = x1-97;
+    short int posJ = y1-49;
+    short int move = 1;
+    if(piece->get_color()==piececolor::BLACK)move*=-1;
+    short int front_move = posI+move;
+    if(front_move < 8 && front_move>0 && 1)allowed_movements.insert({front_move+97, posJ});
+    return allowed_movements;
+}
 
 
-} // namespace chesspieces
-
-} // namespace socketchess
-
-#endif
+} // END OF NAMESPACE socketchess
