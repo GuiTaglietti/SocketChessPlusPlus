@@ -27,18 +27,18 @@
 #include "../include/chessengine/piececolor.h"
 #include "../include/chesstable/table.h"
 
-namespace socketchess {
+namespace socketchess{
 
-[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::pawn::verify_allowed_movements(chesspiece* piece, char x1, char y1) const noexcept {
+[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::pawn::verify_allowed_movements(chesspiece* piece, const char &x1, const char &y1) const noexcept{
     std::set<std::pair<char,char>> allowed_movements;
-    short int posI = x1-97;
-    short int posJ = y1-49;
-    short int move = 1;
-    if(piece->get_color()==piececolor::BLACK)move*=-1;
-    short int front_move = posI+move;
-    if(front_move < 8 && front_move>0 && 1)allowed_movements.insert({front_move+97, posJ});
+    short int posI = x1 - 97, posJ = y1 - 49, move = 1;
+    if(piece->get_color() == piececolor::BLACK)
+        move *= -1;
+    short int front_move = posI + move;
+    if(front_move < 8 && front_move > 0 && 1) // && 1 --> Verificar se a casa da frente está vazia (Em caso de first move, verificar se as duas da frente estão)
+        allowed_movements.insert({front_move + 97, posJ});
     return allowed_movements;
 }
 
 
-} // END OF NAMESPACE socketchess
+} // namespace socketchess

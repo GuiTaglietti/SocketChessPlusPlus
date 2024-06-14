@@ -27,22 +27,22 @@
 #include <atomic>
 #include <unistd.h>
 
-#include "serverSocket.h"
-#include "clientSocket.h"
+#include "../include/socket/serversocket.h"
+#include "../include/socket/clientsocket.h"
 
 std::atomic<bool> running(true);
 
 void runServer() {
     socketchess::serversocket::ConcreteServerSocket server(8080);
 
-    if (!server.startListening()) {
+    if (!server.start_listening()) {
         std::cerr << "Failed to start listening" << std::endl;
         return;
     }
 
     std::cout << "Server is listening on port 8080..." << std::endl;
 
-    int clientSocket = server.acceptConnection();
+    int clientSocket = server.accept_connection();
     if (clientSocket < 0) {
         std::cerr << "Failed to accept connection" << std::endl;
         return;
@@ -52,7 +52,7 @@ void runServer() {
 
     while (running) {
         std::string message;
-        if (server.receiveMessage(clientSocket, message)) {
+        if (server.receive_message(clientSocket, message)) {
             std::cout << "Client: " << message << std::endl;
             if (message == "exit") {
                 running = false;
@@ -62,7 +62,7 @@ void runServer() {
 
         std::cout << "Server: ";
         std::getline(std::cin, message);
-        server.sendMessage(clientSocket, message);
+        server.send_message(clientSocket, message);
         if (message == "exit") {
             running = false;
             break;
@@ -79,13 +79,13 @@ void runClient(const std::string &ip) {
         std::string message;
         std::cout << "Client: ";
         std::getline(std::cin, message);
-        client.sendMessage(message);
+        client.send_message(message);
         if (message == "exit") {
             running = false;
             break;
         }
 
-        if (client.receiveMessage(message)) {
+        if (client.receive_message(message)) {
             std::cout << "Server: " << message << std::endl;
             if (message == "exit") {
                 running = false;

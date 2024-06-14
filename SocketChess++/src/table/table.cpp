@@ -25,10 +25,8 @@
 
 #include "../include/chesstable/table.h"
 
-namespace socketchess {
+namespace socketchess{
 
-    chesstable::chesstable() noexcept{
-        
-    }
+chesstable::chesstable() noexcept{}
 
-} // END OF NAMESPACE socketchess
+} // namespace socketchess

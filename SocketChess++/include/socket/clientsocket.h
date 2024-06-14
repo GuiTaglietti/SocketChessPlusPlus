@@ -29,31 +29,31 @@
 #include <arpa/inet.h>
 #include <string>
 
-namespace socketchess {
+namespace socketchess{
 
-namespace clientsocket {
+namespace clientsocket{
 
-class ClientSocket {
+class ClientSocket{
 public:
     explicit ClientSocket(const std::string &ip, int port) noexcept;
     virtual ~ClientSocket() noexcept;
 
     // Funções membro
-    [[nodiscard]] virtual bool sendMessage(const std::string &message) const noexcept = 0;
-    [[nodiscard]] virtual bool receiveMessage(std::string &message) const noexcept = 0;
+    [[nodiscard]] virtual bool send_message(const std::string &message) const noexcept = 0;
+    [[nodiscard]] virtual bool receive_message(std::string &message) const noexcept = 0;
 
 protected:
     int sock;
     struct sockaddr_in serv_addr;
 };
 
-class ConcreteClientSocket : public ClientSocket {
+class ConcreteClientSocket : public ClientSocket{
 public:
     explicit ConcreteClientSocket(const std::string &ip, int port) noexcept;
     ~ConcreteClientSocket() noexcept override = default;
 
-    /*[[nodiscard]]*/ bool sendMessage(const std::string &message) const noexcept override;
-    /*[[nodiscard]]*/ bool receiveMessage(std::string &message) const noexcept override;
+    /*[[nodiscard]]*/ bool send_message(const std::string &message) const noexcept override;
+    /*[[nodiscard]]*/ bool receive_message(std::string &message) const noexcept override;
 };
 
 } // namespace clientsocket

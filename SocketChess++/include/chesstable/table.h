@@ -35,7 +35,9 @@ namespace socketchess{
 class chesstable{
 public:
     explicit chesstable() noexcept;
-    [[nodiscard]] chesspieces::chesspiece* get_piece(const int &x, const int &y) const noexcept { return board[x][y].get(); }
+    virtual ~chesstable() = default;
+    [[nodiscard]] chesspieces::chesspiece* get_piece(const int &x, const int &y) const noexcept { return board[x][y].get(); } /// Inline
+
 private:
     std::unique_ptr<chesspieces::chesspiece> board[8][8];
 };

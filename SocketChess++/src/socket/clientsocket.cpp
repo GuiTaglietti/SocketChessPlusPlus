@@ -25,47 +25,41 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "../include/socket/clientSocket.h"
+#include "../include/socket/clientsocket.h"
 
-namespace socketchess {
+namespace socketchess{
 
-namespace clientsocket {
+namespace clientsocket{
 
-ClientSocket::ClientSocket(const std::string &ip, int port) noexcept {
-    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        std::cerr << "Erro na criação do socket" << std::endl;
+ClientSocket::ClientSocket(const std::string &ip, int port) noexcept{
+    if((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+        std::cerr << "Erro na criação do socket!" << std::endl;
         return;
     }
-
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
-
-    if (inet_pton(AF_INET, ip.c_str(), &serv_addr.sin_addr) <= 0) {
-        std::cerr << "Endereço inválido/ Endereço não suportado" << std::endl;
+    if(inet_pton(AF_INET, ip.c_str(), &serv_addr.sin_addr) <= 0){
+        std::cerr << "Endereço inválido/Endereço não suportado!" << std::endl;
         return;
     }
-
-    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        std::cerr << "Falha na conexão" << std::endl;
+    if(connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+        std::cerr << "Falha na conexão!" << std::endl;
         return;
     }
 }
 
-ClientSocket::~ClientSocket() noexcept {
-    close(sock);
-}
+ClientSocket::~ClientSocket() noexcept{ close(sock); }
 
-ConcreteClientSocket::ConcreteClientSocket(const std::string &ip, int port) noexcept
-    : ClientSocket(ip, port) {}
+ConcreteClientSocket::ConcreteClientSocket(const std::string &ip, int port) noexcept : ClientSocket(ip, port){}
 
-bool ConcreteClientSocket::sendMessage(const std::string &message) const noexcept {
+inline bool ConcreteClientSocket::send_message(const std::string &message) const noexcept{
     return send(sock, message.c_str(), message.size(), 0) != -1;
 }
 
-bool ConcreteClientSocket::receiveMessage(std::string &message) const noexcept {
+bool ConcreteClientSocket::receive_message(std::string &message) const noexcept{
     char buffer[1024] = {0};
     int valread = read(sock, buffer, 1024);
-    if (valread > 0) {
+    if(valread > 0){
         message = std::string(buffer, valread);
         return true;
     }

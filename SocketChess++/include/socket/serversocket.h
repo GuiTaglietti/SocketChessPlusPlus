@@ -29,36 +29,35 @@
 #include <arpa/inet.h>
 #include <string>
 
-namespace socketchess {
+namespace socketchess{
 
-namespace serversocket {
+namespace serversocket{
 
-class ServerSocket {
+class ServerSocket{
 public:
     explicit ServerSocket(int port) noexcept;
     virtual ~ServerSocket() noexcept;
 
     // Funções membro
-    [[nodiscard]] virtual bool startListening(int backlog = 3) const noexcept = 0;
-    [[nodiscard]] virtual int acceptConnection() const noexcept = 0;
-    [[nodiscard]] virtual bool sendMessage(int clientSocket, const std::string &message) const noexcept = 0;
-    [[nodiscard]] virtual bool receiveMessage(int clientSocket, std::string &message) const noexcept = 0;
+    [[nodiscard]] virtual bool start_listening(int backlog = 3) const noexcept = 0;
+    [[nodiscard]] virtual int accept_connection() const noexcept = 0;
+    [[nodiscard]] virtual bool send_message(int clientSocket, const std::string &message) const noexcept = 0;
+    [[nodiscard]] virtual bool receive_message(int clientSocket, std::string &message) const noexcept = 0;
 
 protected:
-    int server_fd;
+    int server_fd, addrlen;
     struct sockaddr_in address;
-    int addrlen;
 };
 
-class ConcreteServerSocket : public ServerSocket {
+class ConcreteServerSocket : public ServerSocket{
 public:
     explicit ConcreteServerSocket(int port) noexcept;
     ~ConcreteServerSocket() noexcept override = default;
 
-    /*[[nodiscard]]*/ bool startListening(int backlog = 3) const noexcept override;
-    /*[[nodiscard]]*/ int acceptConnection() const noexcept override;
-    /*[[nodiscard]]*/ bool sendMessage(int clientSocket, const std::string &message) const noexcept override;
-    /*[[nodiscard]]*/ bool receiveMessage(int clientSocket, std::string &message) const noexcept override;
+    /*[[nodiscard]]*/ bool start_listening(int backlog = 3) const noexcept override;
+    /*[[nodiscard]]*/ int accept_connection() const noexcept override;
+    /*[[nodiscard]]*/ bool send_message(int clientSocket, const std::string &message) const noexcept override;
+    /*[[nodiscard]]*/ bool receive_message(int clientSocket, std::string &message) const noexcept override;
 };
 
 } // namespace serversocket

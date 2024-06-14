@@ -51,7 +51,7 @@ public:
 
     // Member functions
     [[nodiscard]] virtual const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept = 0;
-    [[nodiscard]] virtual const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, char x1, char y1) const noexcept =0;
+    [[nodiscard]] virtual const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, const char &x1, const char &y1) const noexcept = 0;
 
 private:
     piecename pname; // Enum used to define piece name ( KING | QUEEN | ROOK |BISHOP | KNIGHT | PAWN )
