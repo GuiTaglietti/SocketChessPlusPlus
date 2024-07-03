@@ -23,9 +23,9 @@
  * SOFTWARE.
  */
 
-#include "../include/chessengine/pawn.h"
-#include "../include/chessengine/piececolor.h"
-#include "../include/chesstable/table.h"
+#include "../../include/chessengine/pawn.h"
+#include "../../include/chessengine/piececolor.h"
+#include "../../include/chesstable/table.h"
 
 namespace socketchess{
 

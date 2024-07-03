@@ -36,7 +36,7 @@ enum piecename{
     BISHOP,
     KNIGHT,
     PAWN,
-    _NULL
+    NULLPIECE
 };
 
 } // namespace chesspieces

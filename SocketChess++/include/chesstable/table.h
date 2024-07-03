@@ -27,8 +27,9 @@
 
 #include <memory>
 
-#include "piececolor.h"
-#include "chesspiece.h"
+#include "../chessengine/piececolor.h"
+#include "../chessengine/chesspiece.h"
+#include "../chessengine/piecename.h"
 
 namespace socketchess{
 
@@ -37,7 +38,8 @@ public:
     explicit chesstable() noexcept;
     virtual ~chesstable() = default;
     [[nodiscard]] chesspieces::chesspiece* get_piece(const int &x, const int &y) const noexcept { return board[x][y].get(); } /// Inline
-
+    void instance_new_table() noexcept;
+    std::string teste_impressao(chesspieces::piecename name); 
 private:
     std::unique_ptr<chesspieces::chesspiece> board[8][8];
 };
