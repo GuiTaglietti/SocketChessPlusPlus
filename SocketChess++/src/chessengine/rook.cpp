@@ -22,29 +22,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef KING_H
-#define KING_H
 
-#include <set>
-
-#include "chesspiece.h"
+#include "../../include/chessengine/rook.h"
+#include "../../include/chessengine/piececolor.h"
+#include "../../include/chesstable/table.h"
 
 namespace socketchess{
 
-namespace chesspieces{
+[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::rook::verify_allowed_movements(chesspiece* piece, const char &x1, const char &y1) const noexcept {
+    std::set<std::pair<char,char>> allowed_movements;
+    return allowed_movements;
+}
+ [[nodiscard]] const bool chesspieces::rook::move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept{
+    return false;
+ }
 
-class king : public chesspiece{
-public:
-    explicit king(const piececolor &_c) : chesspiece(_c, piecename::KING){}
-
-    // Overriding "chesspiece" class virtual member function
-    [[nodiscard]] const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept override;
-    [[nodiscard]] const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, const char &x1, const char &y1) const noexcept override;
-};
-
-
-} // namespace chesspieces
 
 } // namespace socketchess
-
-#endif

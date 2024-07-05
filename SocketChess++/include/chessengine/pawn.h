@@ -38,8 +38,8 @@ public:
     explicit pawn(const piececolor &_c) : chesspiece(_c, piecename::PAWN), is_first_movement(true){}
 
     // Overriding "chesspiece" class virtual member function
-    [[nodiscard]] const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept ;
-    [[nodiscard]] const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, const char &x1, const char &y1) const noexcept ;
+    [[nodiscard]] const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept override;
+    [[nodiscard]] const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, const char &x1, const char &y1) const noexcept override;
 private:
     bool is_first_movement;
 };

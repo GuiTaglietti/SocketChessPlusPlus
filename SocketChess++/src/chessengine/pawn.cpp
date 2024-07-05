@@ -29,7 +29,7 @@
 
 namespace socketchess{
 
-[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::pawn::verify_allowed_movements(chesspiece* piece, const char &x1, const char &y1) const noexcept{
+[[nodiscard]] const std::set<std::pair<char,char>> chesspieces::pawn::verify_allowed_movements(chesspiece* piece, const char &x1, const char &y1) const noexcept {
     std::set<std::pair<char,char>> allowed_movements;
     short int posI = x1 - 97, posJ = y1 - 49, move = 1;
     if(piece->get_color() == piececolor::BLACK)
@@ -39,6 +39,9 @@ namespace socketchess{
         allowed_movements.insert({front_move + 97, posJ});
     return allowed_movements;
 }
+ [[nodiscard]] const bool chesspieces::pawn::move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept{
+    return true;
+ }
 
 
 } // namespace socketchess

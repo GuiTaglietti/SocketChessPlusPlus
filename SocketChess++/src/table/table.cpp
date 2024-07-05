@@ -38,15 +38,20 @@ namespace socketchess{
 
 chesstable::chesstable() noexcept{}
 void chesstable::instance_new_table() noexcept{
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            board[i][j] = nullptr;
+        }
+    }
     //------------------------------WHITE PIECES -------------------------------------//
-    //board[0][0]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::WHITE);
-    //board[0][1]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::WHITE);
-    //board[0][2]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::WHITE);
-    //board[0][3]=std::make_unique<chesspieces::king>(chesspieces::piececolor::WHITE);
-    //board[0][4]=std::make_unique<chesspieces::queen>(chesspieces::piececolor::WHITE);
-    //board[0][5]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::WHITE);
-    //board[0][6]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::WHITE);
-    //board[0][7]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::WHITE);
+    board[0][0]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::WHITE);
+    board[0][1]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::WHITE);
+    board[0][2]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::WHITE);
+    board[0][3]=std::make_unique<chesspieces::king>(chesspieces::piececolor::WHITE);
+    board[0][4]=std::make_unique<chesspieces::queen>(chesspieces::piececolor::WHITE);
+    board[0][5]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::WHITE);
+    board[0][6]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::WHITE);
+    board[0][7]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::WHITE);
     board[1][0]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::WHITE);
     board[1][1]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::WHITE);
     board[1][2]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::WHITE);
@@ -57,14 +62,14 @@ void chesstable::instance_new_table() noexcept{
     board[1][7]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::WHITE);
     //----------------------------END OF WHITE PIECES --------------------------------//
     //------------------------------BLACK PIECES -------------------------------------//
-    //board[7][0]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::BLACK);
-    //board[7][1]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::BLACK);
-    //board[7][2]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::BLACK);
-    //board[7][3]=std::make_unique<chesspieces::king>(chesspieces::piececolor::BLACK);
-    //board[7][4]=std::make_unique<chesspieces::queen>(chesspieces::piececolor::BLACK);
-    //board[7][5]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::BLACK);
-    //board[7][6]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::BLACK);
-    //board[7][7]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::BLACK);
+    board[7][0]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::BLACK);
+    board[7][1]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::BLACK);
+    board[7][2]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::BLACK);
+    board[7][3]=std::make_unique<chesspieces::king>(chesspieces::piececolor::BLACK);
+    board[7][4]=std::make_unique<chesspieces::queen>(chesspieces::piececolor::BLACK);
+    board[7][5]=std::make_unique<chesspieces::bishop>(chesspieces::piececolor::BLACK);
+    board[7][6]=std::make_unique<chesspieces::knight>(chesspieces::piececolor::BLACK);
+    board[7][7]=std::make_unique<chesspieces::rook>(chesspieces::piececolor::BLACK);
     board[6][0]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::BLACK);
     board[6][1]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::BLACK);
     board[6][2]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::BLACK);
@@ -75,22 +80,19 @@ void chesstable::instance_new_table() noexcept{
     board[6][7]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::BLACK);
     //----------------------------END OF BLACK PIECES --------------------------------//
     //-----------------------------INSTANCE OF NULL SPACES ----------------------------//
-    for(int i=3; i<6; i++)
+    for(int i=2; i<6; i++)
         for(int j=0; j<=7; j++)
-            board[i][j]=std::make_unique<chesspieces::pawn>(chesspieces::piececolor::BLACK);
+            board[i][j]=std::make_unique<chesspieces::nullpiece>(chesspieces::piececolor::BLACK);
     std::cout << "\n\n IMPRESSAO DO TABULEIRO\n\n";
-    int counter = 0; // FOR DEBUG
     for(int i=0; i<=7; i++){
         for(int j=0; j<=7; j++){
-            counter++;
-            std::cout << " cheguei " << counter << " vezes.\n"; // FOR DEBUG
-            std::cout << teste_impressao( board[i][j]->get_name()) << " ";
+            std::cout << enum_to_string( board[i][j]->get_name()) << " ";
         }
         std::cout << "\n";
     }
 
 }
-std::string chesstable::teste_impressao(chesspieces::piecename name){
+std::string chesstable::enum_to_string(chesspieces::piecename name){
     switch (name) {
         case chesspieces::piecename::KING: return "KING";
         case chesspieces::piecename::QUEEN: return "QUEEN";
@@ -98,6 +100,7 @@ std::string chesstable::teste_impressao(chesspieces::piecename name){
         case chesspieces::piecename::BISHOP: return "BISHOP";
         case chesspieces::piecename::KNIGHT: return "KNIGHT";
         case chesspieces::piecename::PAWN: return "PAWN";
+        case chesspieces::piecename::NULLPIECE: return "NULL";
         default: return "UNKNOWN";
     }
 }

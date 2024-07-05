@@ -39,7 +39,7 @@ public:
     virtual ~chesstable() = default;
     [[nodiscard]] chesspieces::chesspiece* get_piece(const int &x, const int &y) const noexcept { return board[x][y].get(); } /// Inline
     void instance_new_table() noexcept;
-    std::string teste_impressao(chesspieces::piecename name); 
+    std::string enum_to_string(chesspieces::piecename name); 
 private:
     std::unique_ptr<chesspieces::chesspiece> board[8][8];
 };

@@ -34,6 +34,8 @@ namespace chesspieces{
 class nullpiece : public chesspiece{
 public:
     explicit nullpiece(const piececolor &_c) : chesspiece(_c, piecename::NULLPIECE){}
+    [[nodiscard]] const bool move_to(const char &x1, const char &y1, const char &x2, const char &y2) const noexcept override;
+    [[nodiscard]] const std::set<std::pair<char,char>> verify_allowed_movements(chesspiece*, const char &x1, const char &y1) const noexcept override;
 };
 
 
